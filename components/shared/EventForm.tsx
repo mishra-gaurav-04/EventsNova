@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { eventFormSchema } from "@/lib/validator"
 import { Button } from "@/components/ui/button"
 import * as z from 'zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { eventDefaultValues } from '@/constants';
 import { Input } from "@/components/ui/input"
 import Dropdown from "./Dropdown"
@@ -38,6 +38,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
         const eventFormData = values;
+        console.log(values)
         let uploadedImageUrl = values.imageUrl;
 
         if (files.length > 0) {
@@ -50,16 +51,16 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
         if (type === "Create") {
             try {
-                // const newEvent = await createEvent({
-                //     event: { ...values, imageUrl: uploadedImageUrl },
-                //     userId,
-                //     path: '/profile'
-                // })
+                const newEvent = await createEvent({
+                    event: { ...values, imageUrl: uploadedImageUrl },
+                    userId,
+                    path: '/profile'
+                })
 
-                // if(newEvent){
-                //     form.reset()
-                //     router.push(`/events/${newEvent._id}`)
-                // }
+                if(newEvent){
+                    form.reset()
+                    router.push(`/events/${newEvent._id}`)
+                }
             }
             catch (error) {
                 console.log(error);
