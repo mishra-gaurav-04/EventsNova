@@ -37,7 +37,6 @@ model Events {
   organizerId   String     @db.ObjectId
   organizer     User       @relation(fields: [organizerId], references: [id])
   orders        Orders[]
-
   category      Category?  @relation(fields: [categoryId], references: [id])
   categoryId    String?    @db.ObjectId
 }

@@ -18,7 +18,13 @@ export const createEvent = async(eventParams:CreateEventParams) => {
             throw new Error('Invalid Organizer')
         }
 
-        const newEvent = 
+        const newEvent = await prisma.events.create({
+            data : {
+                ...event,
+                categoryId:event.categoryId,
+                organizerId:userId
+            }
+        })
     }
     catch(error){
         handleError(error);
