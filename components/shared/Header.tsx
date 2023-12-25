@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import Image from 'next/image'
+
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
@@ -10,8 +10,8 @@ const Header = () => {
   return (
     <header className='w-full border-b'>
         <div className='wrapper flex items-center justify-between'>
-            <Link href="/">
-                <Image src="/assets/images/logo.svg" width={128} height={38} alt='logo'/>
+            <Link href="/" className='text-4xl font-bold  text-slate-600'>
+                Events<span className='text-slate-400'>Nova</span>
             </Link>
             <SignedIn>
                 <nav className='hidden md:flex-between w-full max-w-xs'>

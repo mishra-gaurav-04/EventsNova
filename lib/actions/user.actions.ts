@@ -17,7 +17,6 @@ export const createUser = async (user:CreateUserParams) => {
                 photo : user.photo
             }
         })
-
         return JSON.parse(JSON.stringify(newUser));
     }
     catch(error){
