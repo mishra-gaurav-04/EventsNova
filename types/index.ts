@@ -102,7 +102,7 @@ export type CreateCategoryParams = {
   categoryName: string
 }
 
-export type Catefory = {
+export type Category = {
   _id : string
   name : string
 }
