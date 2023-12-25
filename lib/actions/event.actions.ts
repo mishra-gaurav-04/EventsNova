@@ -24,7 +24,8 @@ export const createEvent = async(eventParams:CreateEventParams) => {
                 categoryId:event.categoryId,
                 organizerId:userId
             }
-        })
+        });
+        return JSON.parse(JSON.stringify(newEvent));
     }
     catch(error){
         handleError(error);
