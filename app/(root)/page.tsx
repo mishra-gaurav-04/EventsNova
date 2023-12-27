@@ -2,8 +2,11 @@ import Link from 'next/link';
 import {Button} from '../../components/ui/button';
 import Image from 'next/image';
 import Collection from '@/components/shared/Collection';
+import {getAllEvents} from '@/lib/actions/event.actions'; 
 
-export default function Home() {
+export default async function Home() {
+  const events = await getAllEvents({query:'',category:'',page:2,limit:2})
+  // console.log(events?.data);
   return (
     <>
       <section className='bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10 bg'>
@@ -26,7 +29,7 @@ export default function Home() {
           search
           category filter
         </div>
-        <Collection data={[]} emptyTitle='No Events Found' emptyStateSubtext='Come Again Later' limit={6} pages={1} totalPages={4} collectionType='All_Events'/>
+        <Collection data={events?.data} emptyTitle='No Events Found' emptyStateSubtext='Come Again Later' limit={6} page={1} totalPages={4} collectionType='All_Events'/>
       </section>
     </>
   )

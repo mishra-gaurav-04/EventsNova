@@ -1,7 +1,7 @@
 'use server';
 
 import {PrismaClient} from '@prisma/client';
-import {CreateEventParams} from '@/types';
+import {CreateEventParams, GetAllEventsParams} from '@/types';
 import { handleError } from '../utils';
 
 const prisma = new PrismaClient();
@@ -59,6 +59,46 @@ export const getEventById = async(eventId:string) => {
         }
 
         return JSON.parse(JSON.stringify(event));
+    }
+    catch(error){
+        handleError(error);
+    }
+}
+
+export const getAllEvents = async({query,limit=6,page,category}:GetAllEventsParams) => {
+    try{
+        const currentPage = page > 0 ? page : 1;
+        const skipAmount = (currentPage-1)*limit;
+        const events = await prisma.events.findMany({
+            include : {
+                organizer : {
+                    select : {
+                        id : true,
+                        firstName : true,
+                        lastName : true,
+                    }
+                },
+                category : {
+                    select : {
+                        id : true,
+                        name : true
+                    }
+                }
+            },
+            orderBy : {
+                createdAt : 'desc'
+            },
+            skip : 0,
+            take : limit
+        });
+
+        if(!events){
+            throw new Error('Events Not found');
+        }
+
+        return {
+            data : JSON.parse(JSON.stringify(events))
+        }
     }
     catch(error){
         handleError(error);

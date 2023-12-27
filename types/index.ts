@@ -76,7 +76,7 @@ export type GetRelatedEventsByCategoryParams = {
 }
 
 export type Event = {
-  _id: string
+  id: string
   title: string
   description: string
   price: string
