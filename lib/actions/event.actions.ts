@@ -30,4 +30,37 @@ export const createEvent = async(eventParams:CreateEventParams) => {
     catch(error){
         handleError(error);
     }
+};
+
+export const getEventById = async(eventId:string) => {
+    try{
+        const event = await prisma.events.findUnique({
+            where : {
+                id : eventId
+            },
+            include : {
+                organizer : {
+                    select : {
+                        id : true,
+                        firstName : true,
+                        lastName : true
+                    }
+                },
+                category : {
+                    select : {
+                        id : true,
+                        name : true
+                    }
+                }
+            }
+        });
+        if(!event){
+            throw new Error('Event Not Found');
+        }
+
+        return JSON.parse(JSON.stringify(event));
+    }
+    catch(error){
+        handleError(error);
+    }
 }

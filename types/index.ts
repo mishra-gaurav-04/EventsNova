@@ -87,12 +87,12 @@ export type Event = {
   endDateTime: Date
   url: string
   organizer: {
-    _id: string
+    id: string
     firstName: string
     lastName: string
   }
   category: {
-    _id: string
+    id: string
     name: string
   }
 }
