@@ -18,12 +18,15 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useUploadThing } from '@/lib/uploadthing';
 import { useRouter } from 'next/navigation';
 import { createEvent } from '@/lib/actions/event.actions';
+import { Event } from "@/types"
 
-
+ 
 
 type EventFormProps = {
     userId: string,
-    type: "Create" | "Update"
+    type: "Create" | "Update",
+    eventId ?: string,
+    event ?: Event
 }
 
 const EventForm = ({ userId, type }: EventFormProps) => {

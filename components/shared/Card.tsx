@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {formatDateTime} from '@/lib/utils';
 import Image from 'next/image';
 import {auth} from '@clerk/nextjs';
-import DeleteConformation from './DeleteConformation';
+import { DeleteConfirmation } from './DeleteConformation';
 
 type CardProps = {
     eventData: Event,
@@ -12,10 +12,14 @@ type CardProps = {
     hasPrice?: boolean
 }
 
+interface UserData{
+    userId : string | null
+}
+
 const Card = ({ eventData, hasOrderLink, hasPrice }: CardProps) => {
-    const {sessionClaims} = auth();
-    const {userId} = sessionClaims?.userId as string | any
-    const isEventCreator = eventData.organizer.id === userId;
+    const { sessionClaims } = auth();
+    const userData = sessionClaims?.userId as UserData;
+    const isEventCreator = userData?.userId && eventData.organizer.id === userData.userId;
 
     return (
         <div className='group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden shadow-md rounded-xl bg-white transition-all hover:shadow-lg md:min-h-[438px]'>
@@ -27,7 +31,7 @@ const Card = ({ eventData, hasOrderLink, hasPrice }: CardProps) => {
                         <Link href={`/events/${eventData.id}/update`}>
                             <Image src="/assets/icons/edit.svg" alt='edit' width={20} height={20}/>
                         </Link>
-                        <DeleteConformation eventId={eventData.id}/>
+                        <DeleteConfirmation eventId={eventData.id}/>
                     </div>
                 )
             }
