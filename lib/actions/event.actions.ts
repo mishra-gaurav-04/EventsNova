@@ -1,8 +1,9 @@
 'use server';
 
 import {PrismaClient} from '@prisma/client';
-import {CreateEventParams, GetAllEventsParams} from '@/types';
+import {CreateEventParams, GetAllEventsParams,DeleteEventParams} from '@/types';
 import { handleError } from '../utils';
+import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
@@ -98,6 +99,23 @@ export const getAllEvents = async({query,limit=6,page,category}:GetAllEventsPara
 
         return {
             data : JSON.parse(JSON.stringify(events))
+        }
+    }
+    catch(error){
+        handleError(error);
+    }
+};
+
+export const deleteEvent = async({eventId,path} : DeleteEventParams) => {
+    try{
+        const deletedEvent = await prisma.events.delete({
+            where : {
+                id : eventId
+            }
+        });
+
+        if(deletedEvent){
+            revalidatePath(path);
         }
     }
     catch(error){

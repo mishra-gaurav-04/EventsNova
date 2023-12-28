@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {formatDateTime} from '@/lib/utils';
 import Image from 'next/image';
 import {auth} from '@clerk/nextjs';
+import DeleteConformation from './DeleteConformation';
 
 type CardProps = {
     eventData: Event,
@@ -24,8 +25,9 @@ const Card = ({ eventData, hasOrderLink, hasPrice }: CardProps) => {
                 isEventCreator && !hasPrice && (
                     <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all'>
                         <Link href={`/events/${eventData.id}/update`}>
-                            <Image src="/assests/icons/edit.svg" alt='edit' width={20} height={20}/>
+                            <Image src="/assets/icons/edit.svg" alt='edit' width={20} height={20}/>
                         </Link>
+                        <DeleteConformation eventId={eventData.id}/>
                     </div>
                 )
             }
