@@ -9,3 +9,37 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String   @unique
+  userName  String   @unique
+  firstName String
+  lastName  String
+  photo     String
+  events    Events[]
+}
+
+model Events {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  location      String
+  createdAt     DateTime  @default(now())
+  imageUrl      String
+  startDateTime DateTime  @default(now())
+  endDateTime   DateTime  @default(now())
+  price         String
+  isFree        Boolean   @default(false)
+  url           String
+  organizer     User?     @relation(fields: [organizerId], references: [id])
+  organizerId   String?   @db.ObjectId
+  category Category @relation(fields: [categoryId],references: [id])
+  categoryId String @db.ObjectId @unique
+}
+
+model Category {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  event Events?
+}
