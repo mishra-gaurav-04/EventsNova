@@ -17,8 +17,7 @@ export const createUser = async(user:CreateUserParams) => {
                     lastName : user.lastName
                 }
             }
-        )
-        console.log(newUser);   
+        ) 
         if(!newUser){
             throw new Error('Something Went wrong')
         }
